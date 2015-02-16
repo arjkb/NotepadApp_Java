@@ -5,8 +5,16 @@
  */
 package notepadapplication;
 
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import javax.swing.event.UndoableEditEvent;
+import javax.swing.event.UndoableEditListener;
 import javax.swing.text.DefaultEditorKit;
+import javax.swing.text.Document;
 import javax.swing.text.StyledEditorKit;
+import javax.swing.undo.CannotRedoException;
+import javax.swing.undo.CannotUndoException;
+import javax.swing.undo.UndoManager;
 
 /**
  *
@@ -25,8 +33,27 @@ public class Notepad extends javax.swing.JFrame {
     /**
      * Creates new form Notepad
      */
+    
+    UndoAction undoAction;
+    RedoAction redoAction;
+    UndoManager undo;
+    Document doc;
+    
     public Notepad() {
         initComponents();
+        
+        undo = new UndoManager();
+        undoAction = new UndoAction();
+        redoAction = new RedoAction();        
+        
+        doc = jTextPane1.getDocument();
+        
+        doc.addUndoableEditListener( new MyUndoableEditListener() );
+        
+        
+        jTextPane1.getActionMap().put("Undo", undoAction);
+        jTextPane1.getActionMap().put("Redo", redoAction);
+            
         
         jMenu2.add( new StyledEditorKit.CutAction() );
         jMenu2.add( new StyledEditorKit.CopyAction() );
@@ -35,8 +62,52 @@ public class Notepad extends javax.swing.JFrame {
         jMenu3.add( new StyledEditorKit.BoldAction() );
         jMenu3.add( new StyledEditorKit.ItalicAction() );
         jMenu3.add( new StyledEditorKit.UnderlineAction() );
+        
+//        jMenu4.add( jTextPane1.getActionMap().get("Undo") );
+  //      jMenu4.add( undoAction ) ;
     }
+    
+    class MyUndoableEditListener implements UndoableEditListener   {
 
+        @Override
+        public void undoableEditHappened(UndoableEditEvent E) {
+            //Stores the undoable edit into undo
+            undo.addEdit( E.getEdit() );
+            System.out.println("\n Undoable!");
+        }
+    }
+    
+    class UndoAction extends AbstractAction  {
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            try {
+                if( undo.canUndo() )    {
+                    undo.undo();
+                }
+            } catch( CannotUndoException CUE )    {
+                System.out.println("\n ERROR: Cannot Undo! " + CUE);
+                CUE.printStackTrace();
+            }
+        }
+    }
+    
+    
+    class RedoAction extends AbstractAction  {
+
+        @Override
+        public void actionPerformed(ActionEvent ae) {
+            try {
+                if( undo.canRedo() )    {
+                    undo.redo();
+                }
+            } catch( CannotRedoException CRE )    {
+                System.out.println("\n ERROR: Cannot Undo! " + CRE);
+                CRE.printStackTrace();
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT msodify this code. The content of this method is always
