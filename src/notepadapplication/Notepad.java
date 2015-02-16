@@ -52,10 +52,10 @@ public class Notepad extends javax.swing.JFrame {
         
         doc.addUndoableEditListener( new MyUndoableEditListener() );
         
-        /*
+        //Required for working with keyboard-shortcut (apparently)
         jTextPane1.getActionMap().put("Undo", undoAction);
         jTextPane1.getActionMap().put("Redo", redoAction);
-        */  
+
         
         jMenu2.add( new StyledEditorKit.CutAction() );
         jMenu2.add( new StyledEditorKit.CopyAction() );
