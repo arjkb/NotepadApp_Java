@@ -12,7 +12,6 @@ import javax.swing.Action;
 import javax.swing.KeyStroke;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
-import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.Document;
 import javax.swing.text.StyledEditorKit;
 import javax.swing.undo.CannotRedoException;
@@ -53,10 +52,10 @@ public class Notepad extends javax.swing.JFrame {
         
         doc.addUndoableEditListener( new MyUndoableEditListener() );
         
-        
+        /*
         jTextPane1.getActionMap().put("Undo", undoAction);
         jTextPane1.getActionMap().put("Redo", redoAction);
-            
+        */  
         
         jMenu2.add( new StyledEditorKit.CutAction() );
         jMenu2.add( new StyledEditorKit.CopyAction() );
