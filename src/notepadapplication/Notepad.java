@@ -32,7 +32,9 @@ public class Notepad extends javax.swing.JFrame {
         jMenu2.add( new StyledEditorKit.CopyAction() );
         jMenu2.add( new StyledEditorKit.PasteAction() );
         
-        
+        jMenu3.add( new StyledEditorKit.BoldAction() );
+        jMenu3.add( new StyledEditorKit.ItalicAction() );
+        jMenu3.add( new StyledEditorKit.UnderlineAction() );
     }
 
     /**
