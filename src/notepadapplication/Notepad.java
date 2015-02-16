@@ -66,9 +66,8 @@ public class Notepad extends javax.swing.JFrame {
         jMenu3.add( new StyledEditorKit.ItalicAction() );
         jMenu3.add( new StyledEditorKit.UnderlineAction() );
         
-//        jMenu4.add( jTextPane1.getActionMap().get("Undo") );
-  //      jMenu4.add( undoAction ) ;
-        jMenu4.add( getActionByName("Undo"));
+        jMenu4.add( undoAction );
+        jMenu4.add( redoAction );
         
         jTextPane1.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "Undo");
         jTextPane1.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
@@ -80,13 +79,18 @@ public class Notepad extends javax.swing.JFrame {
         public void undoableEditHappened(UndoableEditEvent E) {
             //Stores the undoable edit into undo
             undo.addEdit( E.getEdit() );
+//            undoAction.updateUndoState();
+            
             System.out.println("\n Undoable!");
         }
     }
     
     class UndoAction extends AbstractAction  {
 
-        @Override
+        UndoAction()    {
+            super("Undo");
+        }
+        
         public void actionPerformed(ActionEvent ae) {
             try {
                 if( undo.canUndo() )    {
@@ -101,8 +105,10 @@ public class Notepad extends javax.swing.JFrame {
     
     
     class RedoAction extends AbstractAction  {
-
-        @Override
+        
+        RedoAction()    {
+            super("Redo");
+        }
         public void actionPerformed(ActionEvent ae) {
             try {
                 if( undo.canRedo() )    {
@@ -126,6 +132,8 @@ public class Notepad extends javax.swing.JFrame {
             a = actionsArray[i];
             action.put(a.getValue(Action.NAME), a);
         } 
+        
+        System.out.println(action.get(name));
         return (Action) action.get(name);
     }
     
