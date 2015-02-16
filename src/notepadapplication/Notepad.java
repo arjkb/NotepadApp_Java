@@ -53,10 +53,9 @@ public class Notepad extends javax.swing.JFrame {
         doc.addUndoableEditListener( new MyUndoableEditListener() );
         
         //Required for working with keyboard-shortcut (apparently)
-        jTextPane1.getActionMap().put("Undo", undoAction);
-        jTextPane1.getActionMap().put("Redo", redoAction);
-
-        
+  //      jTextPane1.getActionMap().put("Undo", undoAction);
+  //      jTextPane1.getActionMap().put("Redo", redoAction);
+       
         jMenu2.add( new StyledEditorKit.CutAction() );
         jMenu2.add( new StyledEditorKit.CopyAction() );
         jMenu2.add( new StyledEditorKit.PasteAction() );
@@ -68,8 +67,11 @@ public class Notepad extends javax.swing.JFrame {
         jMenu4.add( undoAction );
         jMenu4.add( redoAction );
         
-        jTextPane1.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "Undo");
-        jTextPane1.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
+//        jTextPane1.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "Undo");
+//        jTextPane1.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
+        
+        jTextPane1.getInputMap().put(KeyStroke.getKeyStroke("control Z"), undoAction);
+        jTextPane1.getInputMap().put(KeyStroke.getKeyStroke("control Y"), redoAction);
     }
     
     class MyUndoableEditListener implements UndoableEditListener   {
