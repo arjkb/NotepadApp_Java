@@ -5,10 +5,21 @@
  */
 package notepadapplication;
 
+import javax.swing.text.DefaultEditorKit;
+import javax.swing.text.StyledEditorKit;
+
 /**
  *
- * @author arjun
+ * @author Arjun Krishna Babu
  */
+
+
+/*
+    Notepad application with the following functionalities:
+    * Bold/Italic/Underline
+    * Undo/Redo
+*/
+
 public class Notepad extends javax.swing.JFrame {
 
     /**
@@ -16,6 +27,12 @@ public class Notepad extends javax.swing.JFrame {
      */
     public Notepad() {
         initComponents();
+        
+        jMenu2.add( new StyledEditorKit.CutAction() );
+        jMenu2.add( new StyledEditorKit.CopyAction() );
+        jMenu2.add( new StyledEditorKit.PasteAction() );
+        
+        
     }
 
     /**
@@ -32,6 +49,8 @@ public class Notepad extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,6 +61,12 @@ public class Notepad extends javax.swing.JFrame {
 
         jMenu2.setText("Edit");
         jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Format");
+        jMenuBar1.add(jMenu3);
+
+        jMenu4.setText("Revision");
+        jMenuBar1.add(jMenu4);
 
         setJMenuBar(jMenuBar1);
 
@@ -58,7 +83,7 @@ public class Notepad extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(59, 59, 59)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -105,6 +130,8 @@ public class Notepad extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextPane jTextPane1;
