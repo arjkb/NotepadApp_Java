@@ -6,7 +6,10 @@
 package notepadapplication;
 
 import java.awt.event.ActionEvent;
+import java.util.HashMap;
 import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.KeyStroke;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
 import javax.swing.text.DefaultEditorKit;
@@ -65,6 +68,10 @@ public class Notepad extends javax.swing.JFrame {
         
 //        jMenu4.add( jTextPane1.getActionMap().get("Undo") );
   //      jMenu4.add( undoAction ) ;
+        jMenu4.add( getActionByName("Undo"));
+        
+        jTextPane1.getInputMap().put(KeyStroke.getKeyStroke("control Z"), "Undo");
+        jTextPane1.getInputMap().put(KeyStroke.getKeyStroke("control Y"), "Redo");
     }
     
     class MyUndoableEditListener implements UndoableEditListener   {
@@ -102,10 +109,24 @@ public class Notepad extends javax.swing.JFrame {
                     undo.redo();
                 }
             } catch( CannotRedoException CRE )    {
-                System.out.println("\n ERROR: Cannot Undo! " + CRE);
+                System.out.println("\n ERROR: Cannot Redo! " + CRE);
                 CRE.printStackTrace();
             }
         }
+    }
+    
+    public Action getActionByName(String name)    {
+       
+        HashMap action = new HashMap<Object, Action>();
+        Action a;
+        
+        Action actionsArray[] = jTextPane1.getActions();
+                
+        for(int i = 0; i < actionsArray.length; i++)    {
+            a = actionsArray[i];
+            action.put(a.getValue(Action.NAME), a);
+        } 
+        return (Action) action.get(name);
     }
     
     /**
