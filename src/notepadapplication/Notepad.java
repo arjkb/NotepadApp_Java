@@ -20,6 +20,7 @@ import javax.swing.JFileChooser;
 import javax.swing.KeyStroke;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.Document;
 import javax.swing.text.StyledEditorKit;
 import javax.swing.undo.CannotRedoException;
@@ -59,9 +60,6 @@ public class Notepad extends javax.swing.JFrame {
         doc = jTextPane1.getDocument();
         
         doc.addUndoableEditListener( new MyUndoableEditListener() );
-        
-        fc = new JFileChooser();
-        
         
         //Required for working with keyboard-shortcut (apparently)
   //      jTextPane1.getActionMap().put("Undo", undoAction);
@@ -227,6 +225,14 @@ public class Notepad extends javax.swing.JFrame {
         String textLine = null;
         String text = new String();
         FileReader fr = null;
+        
+        FileNameExtensionFilter pdf_filter = new FileNameExtensionFilter("Portable Document Format", "pdf");
+        FileNameExtensionFilter text_filter = new FileNameExtensionFilter("Text Files", "txt");
+        
+        fc = new JFileChooser();
+        
+        fc.setFileFilter(pdf_filter);
+        fc.setFileFilter(text_filter);
         
         fileChooserResult = fc.showOpenDialog(jMenu1);
         file = fc.getSelectedFile();
