@@ -237,20 +237,23 @@ public class Notepad extends javax.swing.JFrame {
         fileChooserResult = fc.showOpenDialog(jMenu1);
         file = fc.getSelectedFile();
         
-        
-        try {
-            fr = new FileReader(file);
-            BufferedReader br = new BufferedReader(fr);
-            while( (textLine = br.readLine()) != null ) {
-                text += textLine;
+        if( fileChooserResult == JFileChooser.APPROVE_OPTION)   {
+            jTextPane2.setText("You pressed \"OPEN\"!");
+           
+            try {
+                fr = new FileReader(file);
+                BufferedReader br = new BufferedReader(fr);
+                while( (textLine = br.readLine()) != null ) {
+                    text += textLine;
+                }
+
+                jTextPane1.setText(text);
+
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(Notepad.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
+                Logger.getLogger(Notepad.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            jTextPane1.setText(text);
-            
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Notepad.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Notepad.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
