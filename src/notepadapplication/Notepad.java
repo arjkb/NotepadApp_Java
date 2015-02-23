@@ -224,7 +224,8 @@ public class Notepad extends javax.swing.JFrame {
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         
-        String text = null;
+        String textLine = null;
+        String text = new String();
         FileReader fr = null;
         
         fileChooserResult = fc.showOpenDialog(jMenu1);
@@ -234,9 +235,12 @@ public class Notepad extends javax.swing.JFrame {
         try {
             fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
-            while( (text = br.readLine()) != null ) {
-                jTextPane1.setText(text);
+            while( (textLine = br.readLine()) != null ) {
+                text += textLine;
             }
+            
+            jTextPane1.setText(text);
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Notepad.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
