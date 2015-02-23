@@ -6,9 +6,17 @@
 package notepadapplication;
 
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.JFileChooser;
 import javax.swing.KeyStroke;
 import javax.swing.event.UndoableEditEvent;
 import javax.swing.event.UndoableEditListener;
@@ -31,15 +39,15 @@ import javax.swing.undo.UndoManager;
 */
 
 public class Notepad extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Notepad
-     */
-    
+   
     UndoAction undoAction;
     RedoAction redoAction;
     UndoManager undo;
     Document doc;
+    
+    JFileChooser fc;
+    File file;
+    int fileChooserResult;
     
     public Notepad() {
         initComponents();
@@ -51,6 +59,9 @@ public class Notepad extends javax.swing.JFrame {
         doc = jTextPane1.getDocument();
         
         doc.addUndoableEditListener( new MyUndoableEditListener() );
+        
+        fc = new JFileChooser();
+        
         
         //Required for working with keyboard-shortcut (apparently)
   //      jTextPane1.getActionMap().put("Undo", undoAction);
@@ -153,6 +164,7 @@ public class Notepad extends javax.swing.JFrame {
         jTextPane2 = new javax.swing.JTextPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
@@ -164,6 +176,15 @@ public class Notepad extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTextPane2);
 
         jMenu1.setText("File");
+
+        jMenuItem1.setText("Open");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Edit");
@@ -200,6 +221,30 @@ public class Notepad extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        
+        String text = null;
+        FileReader fr = null;
+        
+        fileChooserResult = fc.showOpenDialog(jMenu1);
+        file = fc.getSelectedFile();
+        
+        
+        try {
+            fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            while( (text = br.readLine()) != null ) {
+                jTextPane1.setText(text);
+            }
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Notepad.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Notepad.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -244,6 +289,7 @@ public class Notepad extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextPane jTextPane1;
